@@ -8,13 +8,13 @@ let player = document.getElementById("joueur");
 const directions = ["up", "down", "left", "right"];
 
 
-//functoion permet de recupérer les valeur du left et top
+//fonction permet de recupérer les valeur du left et top
 function getComputedStyleInteger(element, Property) {
     
     return parseInt(window.getComputedStyle(element).getPropertyValue(Property));
 }
 
-// fuction de deplacement
+// fonction de deplacement
 function move(player, direction) {
     const leftElement = getComputedStyleInteger(player, "left");
     const topElement = getComputedStyleInteger(player, "top");
@@ -47,7 +47,7 @@ function move(player, direction) {
 }
 // ecouter la frappe des fleches et appliquer la fuction move
 document.addEventListener("keydown", function (e) {
-    
+
     switch (e.key) {
         case "ArrowLeft":
             move(player, "left");
