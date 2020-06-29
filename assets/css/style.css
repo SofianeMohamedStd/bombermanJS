@@ -31,3 +31,27 @@ body {
   top: 350px;
   left: 350px;
 }
+
+.bomb {
+  z-index: 3;
+  height: 70px;
+  width: 70px;
+  background: transparent url('../img/70.png') no-repeat center bottom;
+  position: absolute;
+}
+
+.explosion {
+  z-index: 4;
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  background: #cd6133;
+}
+
+.ennemi{
+  z-index: 100;
+  height: 70px;
+  width: 70px;
+  background: black;
+  position: absolute;
+}
