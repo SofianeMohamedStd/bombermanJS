@@ -8,12 +8,12 @@ let audioElement = new Audio('./assets/son/1807.wav');
 
 audioElement.volum = 0.05;
 
-//tableau des directions qui nous sera utile pour deplacer notre joueur
+//tableau des directions qui nous sera utile pour deplacer les ennemis 
 const directions = ["up", "down", "left", "right"];
 
 //fonction qui gére un chiffre random
 function getRandomizer(bottom, top) {
-    return Math.floor(Math.random() * Math.floor(1 + top - bottom)) + bottom;
+    return Math.floor(Math.random() * Math.floor(top - bottom)) + bottom;
 }
 
 
