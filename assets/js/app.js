@@ -47,6 +47,7 @@ function move(player, direction) {
 }
 // ecouter la frappe des fleches et appliquer la fuction move
 document.addEventListener("keydown", function (e) {
+    
     switch (e.key) {
         case "ArrowLeft":
             move(player, "left");
