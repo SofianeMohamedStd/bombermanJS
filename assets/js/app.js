@@ -2,7 +2,7 @@
 let zonejeu = document.getElementById("zonejeu");
 
 // le joueur
-let player = document.getElementById("player");
+let player = document.getElementById("joueur");
 
 //tableau des directions qui nous sert a deplacer notre joueur
 const directions = ["up", "down", "left", "right"];
