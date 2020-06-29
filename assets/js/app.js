@@ -4,15 +4,17 @@ let zonejeu = document.getElementById("zonejeu");
 // le joueur
 let player = document.getElementById("joueur");
 
-//tableau des directions qui nous sert a deplacer notre joueur
+//tableau des directions qui nous sera utile pour deplacer notre joueur
 const directions = ["up", "down", "left", "right"];
 
+
+//functoion permet de recupérer les valeur du left et top
 function getComputedStyleInteger(element, Property) {
     
     return parseInt(window.getComputedStyle(element).getPropertyValue(Property));
 }
 
-
+// fuction de deplacement
 function move(player, direction) {
     const leftElement = getComputedStyleInteger(player, "left");
     const topElement = getComputedStyleInteger(player, "top");
@@ -43,7 +45,7 @@ function move(player, direction) {
             break;
     }
 }
-
+// ecouter la frappe des fleches et appliquer la fuction move
 document.addEventListener("keydown", function (e) {
     switch (e.key) {
         case "ArrowLeft":
