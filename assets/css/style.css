@@ -1,0 +1,33 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+#zonejeu {
+  margin: auto;
+  height: 720px;
+  width: 720px;
+  border: 25px solid #01080e;
+  background: #3390e7;
+  position: relative;
+}
+
+#player {
+  z-index: 100;
+  height: 70px;
+  width: 70px;
+  background: transparent url('../img/bird.png') no-repeat center bottom;
+  position: absolute;
+  top: 350px;
+  left: 350px;
+}
