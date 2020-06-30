@@ -5,9 +5,15 @@ let zonejeu = document.querySelector("#zonejeu");
 let player = document.querySelector("#joueur");
 
 
+let life = 5;
+
+
 let audioElement = new Audio('./assets/son/1807.wav');
+let audioElement1 = new Audio('./assets/son/1024.wav');
 
 audioElement.volum = 0.05;
+
+audioElement1.volum = 0.20;
 
 //tableau des directions qui nous sera utile pour deplacer les ennemis 
 const directions = ["up", "down", "left", "right"];
@@ -82,7 +88,7 @@ function move1(en, d) {
             break;
 
         case "down":
-            if (topElement < 500) {
+            if (topElement < 600) {
                 en.style.top = topElement + 50 + "px";
             }
             break;
@@ -94,7 +100,7 @@ function move1(en, d) {
             break;
 
         case "right":
-            if (leftElement < 500) {
+            if (leftElement < 600) {
                 en.style.left = leftElement + 50 + "px";
             }
             break;
@@ -120,7 +126,7 @@ window.addEventListener("keydown", function (e) {
         case 83:
             move(player, "down");
             break;
-        case 16:
+        case 32:
             createBomb(getProperty(player, "top"), getProperty(player, "left"));
             audioElement.play();
 
@@ -134,6 +140,7 @@ function createBomb(top, left) {
     bomb.setAttribute("class", "bomb");
     bomb.style.top = top + "px";
     bomb.style.left = left + "px";
+    bomb.style.animation = "blink 1s reverse infinite";
     zonejeu.appendChild(bomb);
     setTimeout(function () {
         createExplosion(bomb);
@@ -144,15 +151,17 @@ function createBomb(top, left) {
 function createExplosion(bomb) {
     bomb.classList.add("explosion");
     bomb.classList.remove("bomb");
+    audioElement1.play();
     audioElement.play();
     exploseBomb(bomb);
+    
     setTimeout(function () {
         zonejeu.removeChild(bomb);
-    }, 300);
+    }, 500);
 }
 
 //fonction de creation d'ennemi
-for (let i = 0; i < getRandomizer(5, 2); i++) {
+/*for (let i = 0; i < getRandomizer(5, 2); i++) {
     function createEnnemi(top, left) {
         let ennemi = document.createElement("div");
         ennemi.setAttribute("class", "ennemi");
@@ -163,21 +172,33 @@ for (let i = 0; i < getRandomizer(5, 2); i++) {
     }
 
     window.addEventListener('load', createEnnemi(getRandomizer(500, 0), getRandomizer(500, 0)));
-}
+}*/
 
 // tableau des ennemis 
 const ennemies = [].slice.call(document.querySelectorAll('.ennemi'));
-
+let button = document.querySelector('button');
 //faire deplacer les énnemis aléatoirement
-setInterval(function () {
+/*setInterval(function () {
     for (let i = 0; i < ennemies.length; i++) {
         let enn = ennemies[i];
         let direction = directions[getRandomizer(3, 0)];
         move1(enn, direction);
     }
-}, 1000)
+}, 500)*/
+
+let myVar;
+function myfunction() {
+    setInterval(function(){
+        for (let i = 0; i < ennemies.length; i++) {
+            let enn = ennemies[i];
+            let direction = directions[getRandomizer(3, 0)];
+            move1(enn, direction);
+        }
+    },300)
+}
 
 
+button.addEventListener('click',myfunction);
 // fonction permet de detruire les ennemis ainsi le joueur s'il est en zone d'explosion
 function exploseBomb(bomb) {
     const bombTop = getProperty(bomb, "top");
@@ -189,7 +210,7 @@ function exploseBomb(bomb) {
         const ennemiTop = getProperty(enn, "top");
         const ennemiLeft = getProperty(enn, "left");
 
-        if ((ennemiTop >= bombTop && ennemiTop <= bombTop + 150) && (ennemiLeft >= bombLeft && ennemiLeft <= bombLeft + 150)) {
+        if ((ennemiTop >= bombTop && ennemiTop <= bombTop + 100) && (ennemiLeft >= bombLeft && ennemiLeft <= bombLeft + 100)) {
 
             zonejeu.removeChild(enn);
             ennemies.splice(i, 1);
@@ -197,4 +218,17 @@ function exploseBomb(bomb) {
 
         }
     }
+
+    const playerTop = getProperty(player,"top");
+    const playerLeft = getProperty(player,"left");
+
+    if ((playerTop >= bombTop && playerTop <= bombTop + 100) && (playerLeft >= bombLeft && playerLeft <= bombLeft + 100)) {
+
+        life--;
+        
+        zonejeu.removeChild(player);
+        
+
+    }
+
 }
