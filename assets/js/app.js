@@ -4,12 +4,18 @@ let zonejeu = document.querySelector("#zonejeu");
 // le joueur
 let player = document.querySelector("#joueur");
 
-//test mur
+const ennemies = [].slice.call(document.querySelectorAll('.ennemi'));
+
+
+//mur
+let murs = document.querySelectorAll('.mur');
 
 
 let life = 5;
 
 let vie = document.querySelector("#vie");
+
+
 
 
 let audioElement = new Audio('./assets/son/1807.wav');
@@ -42,7 +48,19 @@ function move(p, d) {
 
     switch (d) {
         case "up":
-            if (topElement > 0) {
+            
+
+            Boolean=false;
+            for(let i = 0; i<murs.length; i++){
+                let topMur = getProperty(murs[i], "top");
+                let leftMur = getProperty(murs[i],"left");
+                
+                if(topMur + 50 == topElement && leftMur == leftElement){
+                    Boolean = true;
+                    break;
+                }
+            };
+            if (topElement > 0 && Boolean == false) {
                 p.style.top = topElement - 50 + "px";
             }
            
@@ -52,7 +70,19 @@ function move(p, d) {
             break;
 
         case "down":
-            if (topElement < 600 ) {
+            
+
+            Boolean=false;
+            for(let i = 0; i<murs.length; i++){
+                let topMur = getProperty(murs[i], "top");
+                let leftMur = getProperty(murs[i],"left");
+                
+                if(topMur == topElement + 50 && leftMur == leftElement){
+                    Boolean = true;
+                    break;
+                }
+            };
+            if (topElement < 600 && Boolean == false ) {
                 p.style.top = topElement + 50 + "px";
             }
             else {
@@ -61,7 +91,17 @@ function move(p, d) {
             break;
 
         case "left":
-            if (leftElement > 0 ) {
+            Boolean=false;
+            for(let i = 0; i<murs.length; i++){
+                let topMur = getProperty(murs[i], "top");
+                let leftMur = getProperty(murs[i],"left");
+                
+                if(topMur == topElement  && leftMur +50 == leftElement){
+                    Boolean = true;
+                    break;
+                }
+            };
+            if (leftElement > 0 && Boolean == false) {
                 p.style.left = leftElement - 50 + "px";
             }
             else {
@@ -70,7 +110,17 @@ function move(p, d) {
             break;
 
         case "right":
-            if (leftElement < 600) {
+            Boolean=false;
+            for(let i = 0; i<murs.length; i++){
+                let topMur = getProperty(murs[i], "top");
+                let leftMur = getProperty(murs[i],"left");
+                
+                if(topMur == topElement  && leftMur == leftElement + 50){
+                    Boolean = true;
+                    break;
+                }
+            };
+            if (leftElement < 600 && Boolean == false) {
                 p.style.left = leftElement + 50 + "px";
             }
             else {
@@ -78,6 +128,7 @@ function move(p, d) {
             }
             break;
     }
+    PlayerEnnemi();
 }
 
 //deplacement de l'ennemi
@@ -111,7 +162,10 @@ function move1(en, d) {
                 en.style.left = leftElement + 50 + "px";
             }
             break;
+
+            
     }
+    
 }
 // ecouter la frappe des fleches et appliquer la fonction move
 window.addEventListener("keydown", function (e) {
@@ -124,40 +178,28 @@ window.addEventListener("keydown", function (e) {
     switch (key_code) {
         case 81:
             
-            if(leftElement==leftMur + 50 && topElement== topMur){
-                audioElement.play()
-                return false;
-            }else{
+           
                 
                move(player, "left");
-            }
+            
 
             break;
 
         case 68:
-            if(leftElement==leftMur -50 && topElement== topMur){
-                audioElement.play()
-                return false;
-            }else{
+           
               move(player, "right");  
-            }
+            
             break;
 
         case 90:
-            if(leftElement==leftMur  && topElement== topMur +50 ){
-                audioElement.play()
-            return false;
-            }else{
+           
                move(player, "up"); 
-            }
+            
             break;
 
         case 83:
-            if(leftElement==leftMur  && topElement== topMur -50 ){
-                audioElement.play()
-                return false;
-            }else{
-                move(player, "down");}
+           
+                move(player, "down");
             break;
         case 32:
             createBomb(getProperty(player, "top"), getProperty(player, "left"));
@@ -173,11 +215,10 @@ function createBomb(top, left) {
     bomb.setAttribute("class", "bomb");
     bomb.style.top = top + "px";
     bomb.style.left = left + "px";
-    bomb.style.animation = "blink 1s reverse infinite";
     zonejeu.appendChild(bomb);
     setTimeout(function () {
         createExplosion(bomb);
-    }, 3000);
+    }, 1000);
 }
 
 //fonction  creation d'explosion et supprission de bomb
@@ -208,7 +249,6 @@ function createExplosion(bomb) {
 }*/
 
 // tableau des ennemis 
-const ennemies = [].slice.call(document.querySelectorAll('.ennemi'));
 let button = document.querySelector('button');
 //faire deplacer les énnemis aléatoirement
 setInterval(function () {
@@ -216,8 +256,9 @@ setInterval(function () {
         let enn = ennemies[i];
         let direction = directions[getRandomizer(3, 0)];
         move1(enn, direction);
+        
     }
-}, 500)
+}, 800)
 
 
 /*function Dennemis() {
@@ -300,6 +341,51 @@ function exploseBomb(bomb) {
 
     }
 
-    
+}
 
+
+function PlayerEnnemi() {
+    let enemi = document.querySelectorAll(".ennemi");
+    for (let i = 0; i < enemi.length; i++) {
+
+        const playerTop = getProperty(player,"top");
+        const playerLeft = getProperty(player,"left");
+
+        const ennemiTop = getProperty(enemi[i],"top");
+        const ennemiLeft = getProperty(enemi[i],"left");
+
+       
+
+        if (playerTop < ennemiTop + 50 && playerTop + 50 > ennemiTop &&
+            playerLeft < ennemiLeft + 50 && playerLeft + 50  > ennemiLeft ) {
+
+                life--;
+        if (life === 4) {
+
+            //faire blinker le player pendant 3sec
+            
+            vie.innerHTML = "attention que 4 vies";
+            
+        }
+         if (life === 3) {
+            vie.innerHTML = "attention que 3 vies";
+        }
+         if (life === 2) {
+            vie.innerHTML = "attention que 2 vies";
+        }
+        if (life === 1) {
+            vie.innerHTML = "attention que  1 vies";
+        }
+        if (life === 0) {
+            vie.innerHTML = "attention que 0 vies";
+            zonejeu.removeChild(player);
+            imlose();
+           
+        }
+            
+            
+
+           
+        }
+    }
 }
