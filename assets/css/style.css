@@ -62,6 +62,7 @@ body {
   background: #3390e7;
   position: relative;
   border-radius: 10px;
+  transform: translate(-50%, 10%);
 }
 
 #joueur {
@@ -130,7 +131,15 @@ body {
     position: absolute;
     text-align: center;
 }
-
+.ennemi:nth-child(5)
+{
+    height: 50px;
+    width:  50px;
+    top: 400px;
+    left: 500px;
+    position: absolute;
+    text-align: center;
+}
 button{
   width: 170px;
   height: 100px;
@@ -144,7 +153,35 @@ button{
 
 header{
   font-size: 50px;
-  transform: translate(400%, -10%);
+  transform: translate(300%, -10%);
   justify-content:center;
   font-family: Averia Sans Libre, serif;
+}
+#vie{
+  block-size: 100px;
+  transform: translate(60%, -10%);
+  font-size: 40px;
+  font-family: Averia Sans Libre, serif;
+}
+
+.imglose{
+  z-index: 999;
+  height: 720px;
+  width: 720px;
+  position: relative;
+  background: transparent url('../img/noob.png') no-repeat center bottom;
+  margin: auto;
+  position: relative;
+  transform: translate(-50%, -60%);
+}
+
+.imgwin{
+  z-index: 999;
+  height: 720px;
+  width: 720px;
+  position: relative;
+  background: transparent url('../img/win.png') no-repeat center bottom;
+  margin: auto;
+  position: relative;
+  transform: translate(-50%, -60%);
 }

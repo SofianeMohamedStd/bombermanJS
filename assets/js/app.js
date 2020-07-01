@@ -7,6 +7,8 @@ let player = document.querySelector("#joueur");
 
 let life = 5;
 
+let vie = document.querySelector("#vie");
+
 
 let audioElement = new Audio('./assets/son/1807.wav');
 let audioElement1 = new Audio('./assets/son/1024.wav');
@@ -178,27 +180,42 @@ function createExplosion(bomb) {
 const ennemies = [].slice.call(document.querySelectorAll('.ennemi'));
 let button = document.querySelector('button');
 //faire deplacer les énnemis aléatoirement
-/*setInterval(function () {
+setInterval(function () {
     for (let i = 0; i < ennemies.length; i++) {
         let enn = ennemies[i];
         let direction = directions[getRandomizer(3, 0)];
         move1(enn, direction);
     }
-}, 500)*/
+}, 500)
 
-let myVar;
-function myfunction() {
+
+/*function Dennemis() {
     setInterval(function(){
         for (let i = 0; i < ennemies.length; i++) {
             let enn = ennemies[i];
             let direction = directions[getRandomizer(3, 0)];
             move1(enn, direction);
         }
-    },300)
+    },800)
+}*/
+
+
+//button.addEventListener('click',Dennemis);
+
+function imlose(){
+    let lose = document.createElement("div");
+    lose.setAttribute("class", "imglose");
+    lose.style.top =  "350px";
+    lose.style.left = "350px";
+    zonejeu.appendChild(lose);
 }
-
-
-button.addEventListener('click',myfunction);
+function imwin(){
+    let win = document.createElement("div");
+    win.setAttribute("class", "imgwin");
+    win.style.top =  "350px";
+    win.style.left = "350px";
+    zonejeu.appendChild(win);
+}
 // fonction permet de detruire les ennemis ainsi le joueur s'il est en zone d'explosion
 function exploseBomb(bomb) {
     const bombTop = getProperty(bomb, "top");
@@ -210,11 +227,13 @@ function exploseBomb(bomb) {
         const ennemiTop = getProperty(enn, "top");
         const ennemiLeft = getProperty(enn, "left");
 
-        if ((ennemiTop >= bombTop && ennemiTop <= bombTop + 100) && (ennemiLeft >= bombLeft && ennemiLeft <= bombLeft + 100)) {
+        if ((ennemiTop >= bombTop && ennemiTop <= bombTop + 150) && (ennemiLeft >= bombLeft && ennemiLeft <= bombLeft + 150)) {
 
             zonejeu.removeChild(enn);
             ennemies.splice(i, 1);
-            
+            if(ennemies.length <= 0){
+                imwin();
+            }
 
         }
     }
@@ -225,10 +244,31 @@ function exploseBomb(bomb) {
     if ((playerTop >= bombTop && playerTop <= bombTop + 100) && (playerLeft >= bombLeft && playerLeft <= bombLeft + 100)) {
 
         life--;
-        
-        zonejeu.removeChild(player);
-        
+        if (life === 4) {
+
+            //faire blinker le player pendant 3sec
+            
+            vie.innerHTML = "attention que 4 vies";
+            
+        }
+         if (life === 3) {
+            vie.innerHTML = "attention que 3 vies";
+        }
+         if (life === 2) {
+            vie.innerHTML = "attention que 2 vies";
+        }
+        if (life === 1) {
+            vie.innerHTML = "attention que  1 vies";
+        }
+        if (life === 0) {
+            vie.innerHTML = "attention que 0 vies";
+            zonejeu.removeChild(player);
+            imlose();
+           
+        }
 
     }
+
+    
 
 }
