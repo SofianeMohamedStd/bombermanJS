@@ -4,6 +4,8 @@ let zonejeu = document.querySelector("#zonejeu");
 // le joueur
 let player = document.querySelector("#joueur");
 
+//test mur
+
 
 let life = 5;
 
@@ -43,13 +45,14 @@ function move(p, d) {
             if (topElement > 0) {
                 p.style.top = topElement - 50 + "px";
             }
+           
             else {
                 audioElement.play()
             }
             break;
 
         case "down":
-            if (topElement < 600) {
+            if (topElement < 600 ) {
                 p.style.top = topElement + 50 + "px";
             }
             else {
@@ -58,7 +61,7 @@ function move(p, d) {
             break;
 
         case "left":
-            if (leftElement > 0) {
+            if (leftElement > 0 ) {
                 p.style.left = leftElement - 50 + "px";
             }
             else {
@@ -82,9 +85,11 @@ function move1(en, d) {
     const leftElement = getProperty(en, "left");
     const topElement = getProperty(en, "top");
 
+        
+
     switch (d) {
         case "up":
-            if (topElement > 0) {
+            if (topElement > 0 ) {
                 en.style.top = topElement - 50 + "px";
             }
             break;
@@ -96,13 +101,13 @@ function move1(en, d) {
             break;
 
         case "left":
-            if (leftElement > 0) {
+            if (leftElement > 0 ) {
                 en.style.left = leftElement - 50 + "px";
             }
             break;
 
         case "right":
-            if (leftElement < 600) {
+            if (leftElement < 600 ) {
                 en.style.left = leftElement + 50 + "px";
             }
             break;
@@ -110,23 +115,49 @@ function move1(en, d) {
 }
 // ecouter la frappe des fleches et appliquer la fonction move
 window.addEventListener("keydown", function (e) {
-
+    const mur = document.querySelector('.mur');
+    const leftMur = getProperty(mur, "left");
+    const topMur = getProperty(mur, "top");
+    const leftElement = getProperty(player, "left");
+    const topElement = getProperty(player, "top");
     let key_code = e.keyCode;
     switch (key_code) {
         case 81:
-            move(player, "left");
+            
+            if(leftElement==leftMur + 50 && topElement== topMur){
+                audioElement.play()
+                return false;
+            }else{
+                
+               move(player, "left");
+            }
+
             break;
 
         case 68:
-            move(player, "right");
+            if(leftElement==leftMur -50 && topElement== topMur){
+                audioElement.play()
+                return false;
+            }else{
+              move(player, "right");  
+            }
             break;
 
         case 90:
-            move(player, "up");
+            if(leftElement==leftMur  && topElement== topMur +50 ){
+                audioElement.play()
+            return false;
+            }else{
+               move(player, "up"); 
+            }
             break;
 
         case 83:
-            move(player, "down");
+            if(leftElement==leftMur  && topElement== topMur -50 ){
+                audioElement.play()
+                return false;
+            }else{
+                move(player, "down");}
             break;
         case 32:
             createBomb(getProperty(player, "top"), getProperty(player, "left"));
