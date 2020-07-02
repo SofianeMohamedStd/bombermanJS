@@ -235,7 +235,8 @@ window.addEventListener("keydown", function (e) {
             break;
         case 96:
             document.location.reload(true);
-        break;    
+        break;   
+        
     }
 
 });
@@ -331,7 +332,7 @@ function exploseBomb(bomb) {
         const ennemiTop = getProperty(enn, "top");
         const ennemiLeft = getProperty(enn, "left");
 
-        if ((ennemiTop >= bombTop && ennemiTop <= bombTop + 150) && (ennemiLeft >= bombLeft && ennemiLeft <= bombLeft + 150)) {
+        if (ennemiTop < bombTop + 100 && ennemiTop +100 > bombTop && ennemiLeft < bombLeft + 100 && ennemiLeft + 100 > bombLeft ) {
 
             zonejeu.removeChild(enn);
             ennemies.splice(i, 1);
